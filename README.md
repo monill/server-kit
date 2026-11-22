@@ -121,7 +121,7 @@ Em máquinas virtuais com 4 GB e 2 processadores, instalando de verdade:
 | Ubuntu | Sistema | PHP | MySQL |
 |---|---|---|---|
 | 22.04 | Laravel 12 | 8.4 | 8.4 |
-| 24.04 | Laravel 12 (reinstalação, troca de PHP 8.5 → 8.4 → 8.3 e de Node 22 → 26 → 22 → 24) | 8.3 / 8.4 | 9.7 |
+| 24.04 | Laravel 12 (reinstalação, troca de PHP 8.5 → 8.4 → 8.3 e de Node 26 → 24) | 8.3 / 8.4 | 9.7 |
 | 26.04 | PHP puro | 8.5 (do Ubuntu) | 9.7 |
 
 ## Onde fica cada coisa
