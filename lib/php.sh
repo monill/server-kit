@@ -223,6 +223,6 @@ php_resize_all() {
   local v
   for v in /etc/php/*/fpm; do
     v="$(echo "${v}" | cut -d/ -f4)"
-    systemctl is-enabled --quiet "php${v}-fpm" 2>/dev/null && systemctl reload "php${v}-fpm" 2>/dev/null || true
+    if systemctl is-enabled --quiet "php${v}-fpm" 2>/dev/null; then systemctl reload "php${v}-fpm" 2>/dev/null || true; fi
   done
 }
