@@ -50,7 +50,9 @@ curl -fsSL https://raw.githubusercontent.com/monill/server-kit/main/install.sh |
    Supervisor e Reverb (tempo real), se o projeto usar.
    **PHP puro:** os dados do banco ficam em `~/database.txt`, que só o usuário do sistema lê, para você copiar
    para a configuração do projeto.
-7. `composer install` e `npm run build`, quando o projeto tiver.
+7. `composer install` e `npm run build`, quando o projeto tiver. Para o `npm run build`, você escolhe o **Node.js**
+   entre as versões LTS (de suporte longo): 26, 24 ou 22. A sugestão vem do `.nvmrc`, do `.node-version` ou do
+   `"engines"` do `package.json`; sem nenhum deles, 24.
 8. **Nginx + HTTPS** com Let's Encrypt, que renova sozinho. Pedidos pelo IP ou por nomes desconhecidos são
    recusados.
 
@@ -64,6 +66,7 @@ O comando `server-kit` fica disponível:
 sudo server-kit                    # menu
 sudo server-kit update             # git pull, composer, build, migrations, reinicia filas (manutenção por segundos)
 sudo server-kit update --php 8.4   # troca a versão do PHP (site, filas e agendador juntos)
+sudo server-kit update --node 26   # troca a versão do Node.js
 sudo server-kit check              # confere o servidor e o sistema
 sudo server-kit resize             # ajusta ao tamanho atual do servidor
 sudo server-kit remove             # tira do ar; pergunta antes de apagar banco e arquivos
@@ -92,6 +95,7 @@ Tudo que não for passado é perguntado. Sem terminal (automação), usa as resp
 
 ```
 --repo URL  --branch NOME  --domain NOME  --email EMAIL  --php 7.4…8.6  --mysql 8.4|9.7  --db local|remote|none
+--node 22|24|26
 --test      máquina de teste sem domínio: certificado próprio no lugar do Let's Encrypt
 --lang pt_BR|en   --plain (perguntas simples, sem menus)   --yes (segue apesar dos avisos; nunca apaga nada)
 ```
@@ -117,7 +121,7 @@ Em máquinas virtuais com 4 GB e 2 processadores, instalando de verdade:
 | Ubuntu | Sistema | PHP | MySQL |
 |---|---|---|---|
 | 22.04 | Laravel 12 | 8.4 | 8.4 |
-| 24.04 | Laravel 12 (reinstalação e troca 8.5 → 8.4 → 8.3) | 8.3 / 8.4 | 9.7 |
+| 24.04 | Laravel 12 (reinstalação, troca de PHP 8.5 → 8.4 → 8.3 e de Node 22 → 26 → 22 → 24) | 8.3 / 8.4 | 9.7 |
 | 26.04 | PHP puro | 8.5 (do Ubuntu) | 9.7 |
 
 ## Onde fica cada coisa

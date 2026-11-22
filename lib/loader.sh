@@ -11,7 +11,7 @@ done
 unset sk_lib
 
 # Options from the command line (empty = ask)
-OPT_REPO=""; OPT_BRANCH=""; OPT_DOMAIN=""; OPT_EMAIL=""; OPT_PHP=""; OPT_DB=""; OPT_TEST=0; OPT_LANG=""; OPT_PLAIN=0; OPT_YES=0
+OPT_REPO=""; OPT_BRANCH=""; OPT_DOMAIN=""; OPT_EMAIL=""; OPT_PHP=""; OPT_NODE=""; OPT_DB=""; OPT_TEST=0; OPT_LANG=""; OPT_PLAIN=0; OPT_YES=0
 ACTION=""; RESIZE_IF_CHANGED=0
 
 sk_parse_args() {
@@ -25,12 +25,13 @@ sk_parse_args() {
       --domain) OPT_DOMAIN="${2:-}"; shift ;;
       --email) OPT_EMAIL="${2:-}"; shift ;;
       --php) OPT_PHP="${2:-}"; shift ;;
+      --node) OPT_NODE="${2:-}"; shift ;;
       --db) OPT_DB="${2:-}"; shift ;;
       --test) OPT_TEST=1 ;;
       --lang) OPT_LANG="${2:-}"; shift ;;
       --plain) OPT_PLAIN=1 ;;
       --yes) OPT_YES=1 ;;
-      -h|--help) sed -n '2,22p' "${SK_DIR}/install.sh" | sed 's/^# \{0,1\}//'; exit 0 ;;
+      -h|--help) sed -n '2,23p' "${SK_DIR}/install.sh" | sed 's/^# \{0,1\}//'; exit 0 ;;
       -v|--version) echo "server-kit ${SK_VERSION}"; exit 0 ;;
       -*) echo "Unknown option: $1 (see --help)" >&2; exit 1 ;;
       *) echo "Unknown argument: $1 (see --help)" >&2; exit 1 ;;

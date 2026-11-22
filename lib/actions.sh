@@ -9,7 +9,7 @@ REVERB_PORT=8080
 SITE=""; REPO=""; BRANCH=""; DOMAIN=""; EMAIL=""; PHP_VERSION=""; APP_TYPE=""; APP_DIR=""; DOCROOT=""; APP_USER=""
 APP_HOME=""; DIR_APP=""; DB_MODE=""; DB_NAME=""; DB_USER=""; DB_PASS=""; DB_HOST=""; DB_PORT=""; DB_CA=""
 DB_HOST_REMOTE=""; DB_PORT_REMOTE=""; DB_CA_SOURCE=""; MYSQL_SERIES=""; OPT_MYSQL=""; TEST_MODE=0; REVERB=0
-INSTALLED_AT=""; FPM_TOTAL=0; MYSQL_POOL_MB=0; REDIS_MB=0; WORKERS=1
+NODE_VERSION=""; INSTALLED_AT=""; FPM_TOTAL=0; MYSQL_POOL_MB=0; REDIS_MB=0; WORKERS=1
 
 # Keeps a copy in /opt/server-kit and the "server-kit" command, so update/remove/resize work after the clone is gone
 self_install() {
@@ -96,6 +96,7 @@ action_install() {
 
   # One system per server: installing again is only for the same system
   if state_exists; then
+    OPT_NODE="${OPT_NODE:-$(grep -E '^NODE_VERSION=' "${SITE_FILE}" | cut -d= -f2 | tr -d "'" || true)}"
     previous_repo="$(grep -E '^REPO=' "${SITE_FILE}" | cut -d= -f2- || true)"
     state_load
     first=0
@@ -165,7 +166,11 @@ action_install() {
 
   composer_run "${APP_DIR}" "${APP_USER}" "${PHP_VERSION}"
   env_prepare "${APP_DIR}" "${APP_USER}" "${APP_TYPE}" "https://${DOMAIN}"
-  if node_needed "${APP_DIR}"; then node_install; node_build "${APP_DIR}" "${APP_USER}"; fi
+  if node_needed "${APP_DIR}"; then
+    node_menu "$(node_suggest "${APP_DIR}")"
+    node_install "${NODE_VERSION}"
+    node_build "${APP_DIR}" "${APP_USER}"
+  fi
 
   local reverb_port=""
   if [[ "${APP_TYPE}" == "laravel" ]]; then
@@ -222,7 +227,14 @@ action_update() {
     die "$(t update_pull_fail)"
   fi
   composer_run "${APP_DIR}" "${APP_USER}" "${PHP_VERSION}"
-  if node_needed "${APP_DIR}"; then node_install; node_build "${APP_DIR}" "${APP_USER}"; fi
+  if node_needed "${APP_DIR}"; then
+    # Changing the Node version: --node 26 (otherwise the one chosen at the install)
+    [[ -n "${OPT_NODE}" ]] && NODE_VERSION="${OPT_NODE}"
+    [[ -n "${NODE_VERSION}" ]] || NODE_VERSION="$(node_suggest "${APP_DIR}")"
+    [[ " ${NODE_VERSIONS[*]} " == *" ${NODE_VERSION} "* ]] || die "$(t invalid_choice "${NODE_VERSION}" "${NODE_VERSIONS[*]}")"
+    node_install "${NODE_VERSION}"
+    node_build "${APP_DIR}" "${APP_USER}"
+  fi
 
   sizing_compute "$(has_local_mysql)"
   if [[ "${PHP_VERSION}" != "${old_php}" ]]; then

@@ -163,4 +163,6 @@ MSG+=(
   [php_not_accepted]="The project (composer.json / composer.lock) does not accept PHP %s: composer install will refuse it. Pick another version, or update the dependencies of the project first. Continue anyway?"
   [composer_failed]="composer install failed with PHP %s (see the lines above). When it says \"your php version does not satisfy\", the project needs another PHP version or updated dependencies (composer update in development)."
   [no_without_terminal]="no (no terminal to ask; --yes answers yes)"
+  [node_choose]="Node.js version (to build the screens)"
+  [node_label]="LTS, support until %s"
 )

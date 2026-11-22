@@ -14,8 +14,9 @@
 #   sudo ./install.sh resize              size PHP, MySQL, Redis and queues for this machine (after a plan change)
 #   (after the first install the same actions are also available as: sudo server-kit <action>)
 #
-# Options for install (anything left out is asked; update also takes --php to change the version):
+# Options for install (anything left out is asked; update also takes --php and --node to change the version):
 #   --repo URL  --branch NAME  --domain NAME  --email EMAIL  --php 7.4…8.6  --mysql 8.4|9.7  --db local|remote|none
+#   --node 22|24|26 (only for projects that build their screens with npm)
 #   --test (VM without a domain: self-signed certificate)  --lang pt_BR|en  --plain (no menus, plain questions)
 #   --yes (go on past warnings: old PHP, server checks; never answers the deletions of remove)
 #
