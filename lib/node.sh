@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 # Node.js, only to build the screens of systems that have a "build" script in package.json (Vite, Mix...).
-# Only LTS versions (the ones with long support), from NodeSource. Version 20 ended in April 2026.
+# Only LTS versions (the ones with long support) from 24 up, from NodeSource.
 
-NODE_VERSIONS=(26 24 22)
+NODE_VERSIONS=(26 24)
 
 # End of support of each LTS (github.com/nodejs/Release)
 node_eol_date() {
-  case "$1" in 22) echo 2027-04-30 ;; 24) echo 2028-04-30 ;; 26) echo 2029-04-30 ;; *) echo 1970-01-01 ;; esac
+  case "$1" in 24) echo 2028-04-30 ;; 26) echo 2029-04-30 ;; *) echo 1970-01-01 ;; esac
 }
 
 node_needed() { [[ -f "$1/package.json" ]] && grep -qE '"build"[[:space:]]*:' "$1/package.json"; }
 
 # Suggested version: the one in .nvmrc / .node-version, else the "engines" of package.json, else 24 (the LTS that
-# most projects and build tools are tested with)
+# most projects and build tools are tested with). A project that asks for an older one gets 24.
 node_suggest() {
   local dir="$1" wanted="" constraint="" v
   [[ -f "${dir}/.nvmrc" ]] && wanted="$(grep -oE '[0-9]+' "${dir}/.nvmrc" | head -n 1 || true)"

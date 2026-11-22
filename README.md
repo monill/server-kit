@@ -51,8 +51,8 @@ curl -fsSL https://raw.githubusercontent.com/monill/server-kit/main/install.sh |
    **PHP puro:** os dados do banco ficam em `~/database.txt`, que só o usuário do sistema lê, para você copiar
    para a configuração do projeto.
 7. `composer install` e `npm run build`, quando o projeto tiver. Para o `npm run build`, você escolhe o **Node.js**
-   entre as versões LTS (de suporte longo): 26, 24 ou 22. A sugestão vem do `.nvmrc`, do `.node-version` ou do
-   `"engines"` do `package.json`; sem nenhum deles, 24.
+   entre as versões LTS (de suporte longo) a partir da 24: 24 ou 26. A sugestão vem do `.nvmrc`, do `.node-version` ou do
+   `"engines"` do `package.json`; sem nenhum deles, ou se o projeto pedir uma mais antiga, 24.
 8. **Nginx + HTTPS** com Let's Encrypt, que renova sozinho. Pedidos pelo IP ou por nomes desconhecidos são
    recusados.
 
@@ -95,7 +95,7 @@ Tudo que não for passado é perguntado. Sem terminal (automação), usa as resp
 
 ```
 --repo URL  --branch NOME  --domain NOME  --email EMAIL  --php 7.4…8.6  --mysql 8.4|9.7  --db local|remote|none
---node 22|24|26
+--node 24|26
 --test      máquina de teste sem domínio: certificado próprio no lugar do Let's Encrypt
 --lang pt_BR|en   --plain (perguntas simples, sem menus)   --yes (segue apesar dos avisos; nunca apaga nada)
 ```
